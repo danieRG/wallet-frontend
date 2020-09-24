@@ -1,0 +1,25 @@
+{
+  "name": "wallet-frontend",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
+    "react-bootstrap-icons": "^1.0.0",
+    "react-dom": "^15.5.4",
+    "react-router-dom": "^4.1.1",
+    "socket.io": "^2.0.1",
+    "toastr": "^2.1.2"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
