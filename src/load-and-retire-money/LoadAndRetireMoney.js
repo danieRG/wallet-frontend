@@ -14,7 +14,9 @@ class LoadAndRetireMoney extends Component {
 
 		this.state = {
 			quantity: '',
-			operation: 'retirement'
+			operation: 'retirement',
+			email: JSON.parse(sessionStorage.getItem('user')).email,
+			token: ''
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,6 +26,13 @@ class LoadAndRetireMoney extends Component {
 		this.userLogged = JSON.parse(sessionStorage.getItem('user'));
 	}
   
+	genToken(){
+		let sixdigitsrandom = Math.floor(100000 + Math.random() * 900000);
+		this.setState({
+			token: sixdigitsrandom 
+		});
+	}
+
 	handleOnChange(event){
 		let target = event.target;
 		let name = target.name;
@@ -49,9 +58,36 @@ class LoadAndRetireMoney extends Component {
 			 '&id_requester=' + this.userLogged.id,
 			success : data => {
 				if(data.status === 'saved'){
+					this.genToken()
+					$.ajax({
+						url : this.api + '/send-email',
+						type: 'post',
+						data: 'email=' + this.state.email + '&token=' + this.state.token + '&quantity=' + this.state.quantity + '&operation=' + this.state.operation,
+						success :
+							console.log('Éxito')
+						,
+						error: err =>{
+							toastr.warning('Error al conectar al servidor, Intenta más tarde');
+						}
+					});
+
 					toastr.success('¡Tu operación '+ this.state.operation +' ha sido procesada¡', 'Petición procesada');
 					window.location.href = '/#/dashboard';
 				}else if(data.status === 'in-progress'){
+					
+					this.genToken()
+					$.ajax({
+						url : this.api + '/send-email',
+						type: 'post',
+						data: 'email=' + this.state.email + '&token=' + this.state.token + '&quantity=' + this.state.quantity + '&operation=' + this.state.operation,
+						success :
+							console.log('Éxito')
+						,
+						error: err =>{
+							toastr.warning('Error al conectar al servidor, Intenta más tarde');
+						}
+					});
+
 					toastr.info('Tu petición ha sido erviada, espera a que un administrador confirme...');
 					window.location.href = '/#/dashboard';
 				}
